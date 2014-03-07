@@ -13,6 +13,10 @@ type Author struct {
 	Name, Email string
 }
 
+type Enclosure struct {
+	Url, Type string
+}
+
 type Item struct {
 	Title       string
 	Link        *Link
@@ -21,6 +25,7 @@ type Item struct {
 	Id          string // used as guid in rss, id in atom
 	Updated     time.Time
 	Created     time.Time
+	Enclosures  []*Enclosure
 }
 
 type Feed struct {
@@ -36,12 +41,16 @@ type Feed struct {
 	Copyright   string
 }
 
+func (i *Item) AddEnclosure(enclosure *Enclosure) {
+	i.Enclosures = append(i.Enclosures, enclosure)
+}
+
 // add a new Item to a Feed
 func (f *Feed) Add(item *Item) {
 	f.Items = append(f.Items, item)
 }
 
-// returns the first non-zero time formatted as a string or "" 
+// returns the first non-zero time formatted as a string or ""
 func anyTimeFormat(format string, times ...time.Time) string {
 	for _, t := range times {
 		if !t.IsZero() {

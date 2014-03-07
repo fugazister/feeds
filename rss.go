@@ -66,7 +66,7 @@ type RssItem struct {
 	Author      string   `xml:"author,omitempty"`
 	Category    string   `xml:"category,omitempty"`
 	Comments    string   `xml:"comments,omitempty"`
-	Enclosure   *RssEnclosure
+	Enclosures  []*RssEnclosure
 	Guid        string `xml:"guid,omitempty"`    // Id used
 	PubDate     string `xml:"pubDate,omitempty"` // created or updated
 	Source      string `xml:"source,omitempty"`
@@ -83,6 +83,14 @@ type Rss struct {
 	*Feed
 }
 
+func newRssEnclosure(e *Enclosure) *RssEnclosure {
+	enclosure := &RssEnclosure{
+		Url:  e.Url,
+		Type: e.Type,
+	}
+	return enclosure
+}
+
 // create a new RssItem with a generic Item struct's data
 func newRssItem(i *Item) *RssItem {
 	item := &RssItem{
@@ -92,6 +100,11 @@ func newRssItem(i *Item) *RssItem {
 		Guid:        i.Id,
 		PubDate:     anyTimeFormat(time.RFC822, i.Created, i.Updated),
 	}
+
+	for _, enclosure := range i.Enclosures {
+		item.Enclosures = append(item.Enclosures, newRssEnclosure(enclosure))
+	}
+
 	if i.Author != nil {
 		item.Author = i.Author.Name
 	}
