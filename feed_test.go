@@ -50,25 +50,25 @@ var rssOutput = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0">
     <description>discussion about tech, footie, photos</description>
     <copyright>This work is copyright © Benjamin Button</copyright>
     <managingEditor>jmoiron@jmoiron.net (Jason Moiron)</managingEditor>
-    <pubDate>16 Jan 13 21:52 EST</pubDate>
+    <pubDate>Wed, 16 Jan 2013 21:52:35 UTC</pubDate>
     <item>
       <title>Limiting Concurrency in Go</title>
       <link>http://jmoiron.net/blog/limiting-concurrency-in-go/</link>
       <description>A discussion on controlled parallelism in golang</description>
       <author>Jason Moiron</author>
-      <pubDate>16 Jan 13 21:52 EST</pubDate>
+      <pubDate>Wed, 16 Jan 2013 21:52:35 UTC</pubDate>
     </item>
     <item>
       <title>Logic-less Template Redux</title>
       <link>http://jmoiron.net/blog/logicless-template-redux/</link>
       <description>More thoughts on logicless templates</description>
-      <pubDate>16 Jan 13 21:52 EST</pubDate>
+      <pubDate>Wed, 16 Jan 2013 21:52:35 UTC</pubDate>
     </item>
     <item>
       <title>Idiomatic Code Reuse in Go</title>
       <link>http://jmoiron.net/blog/idiomatic-code-reuse-in-go/</link>
       <description>How to use interfaces &lt;em&gt;effectively&lt;/em&gt;</description>
-      <pubDate>16 Jan 13 21:52 EST</pubDate>
+      <pubDate>Wed, 16 Jan 2013 21:52:35 UTC</pubDate>
     </item>
   </channel>
 </rss>`
@@ -78,7 +78,7 @@ func TestFeed(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	tz := time.FixedZone("EST", -5*60*60)
+	tz := time.FixedZone("UTC", -5*60*60)
 	now = now.In(tz)
 
 	feed := &Feed{
